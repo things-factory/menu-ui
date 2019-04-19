@@ -1,10 +1,27 @@
-import { html } from 'lit-element'
+import { html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, PageView } from '@things-factory/shell'
 
 import '../components/menu-tile-list'
 
 class MenuListPage extends connect(store)(PageView) {
+  static get styles() {
+    return [
+      css`
+        :host {
+          display: flex;
+          flex-direction: column;
+        }
+
+        menu-tile-list {
+          flex: 1;
+
+          overflow-y: auto;
+        }
+      `
+    ]
+  }
+
   static get properties() {
     return {
       menuId: String,
@@ -12,15 +29,16 @@ class MenuListPage extends connect(store)(PageView) {
       routingTypes: Object
     }
   }
+
   render() {
     return html`
-      <section>
-        <menu-tile-list
-          .menus="${this.menus}"
-          .routingTypes="${this.routingTypes}"
-          .menuId="${this.menuId}"
-        ></menu-tile-list>
-      </section>
+      <page-toolbar></page-toolbar>
+
+      <menu-tile-list
+        .menus="${this.menus}"
+        .routingTypes="${this.routingTypes}"
+        .menuId="${this.menuId}"
+      ></menu-tile-list>
     `
   }
 

@@ -105,8 +105,6 @@ export default class MenuTileList extends LitElement {
     var submenus = (menu && menu.children) || []
 
     return html`
-      <page-toolbar></page-toolbar>
-
       <ul class="nav">
         ${topmenus.map(
           (menu, idx) => html`
