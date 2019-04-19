@@ -2,6 +2,7 @@ import { html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import { store, PageView } from '@things-factory/shell'
 
+import '../components/menu-bar'
 import '../components/menu-tile-list'
 
 class MenuListPage extends connect(store)(PageView) {
@@ -33,6 +34,8 @@ class MenuListPage extends connect(store)(PageView) {
   render() {
     return html`
       <page-toolbar></page-toolbar>
+      
+      <menu-bar .menus=${this.menus}></menu-bar>
 
       <menu-tile-list
         .menus="${this.menus}"

@@ -105,14 +105,6 @@ export default class MenuTileList extends LitElement {
     var submenus = (menu && menu.children) || []
 
     return html`
-      <ul class="nav">
-        ${topmenus.map(
-          (menu, idx) => html`
-            <li><a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${menu.name}</a></li>
-          `
-        )}
-      </ul>
-
       <section id="main">
         <ul>
           ${submenus.map(
