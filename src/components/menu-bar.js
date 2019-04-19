@@ -6,16 +6,29 @@ export default class MenuBar extends LitElement {
   static get styles() {
     return [
       css`
-        ul {
-          padding: 5px 10px 5px 10px;
-          margin: 0px;
-          background-color: #242d30;
+        :host {
+          background-color: var(--secondary-dark-color);
+        }
 
+        ul {
+          display: block;
           list-style: none;
+          margin: 5px 5px 0px 5px;
+          padding: 5px 5px 0px 5px;
         }
 
         li {
-          display: inline;
+          display: inline-block;
+          margin: 0 3px 0 3px;
+          padding: 0px 0 5px 0;
+
+          border-width: 0px 0px 3px 0px;
+          border-style: solid;
+          border-color: #242d30;
+        }
+
+        li[active] {
+          border-color: red;
         }
 
         li a {
@@ -23,8 +36,8 @@ export default class MenuBar extends LitElement {
           color: white;
         }
 
-        li a[active] {
-          color: red;
+        mwc-icon {
+          vertical-align: middle;
         }
       `
     ]
@@ -32,21 +45,27 @@ export default class MenuBar extends LitElement {
 
   static get properties() {
     return {
-      menus: Array
+      menus: Array,
+      menuId: String
     }
   }
 
   render() {
     var topmenus = this.menus || []
-    var activeIndex = 1
 
     return html`
       <ul>
-        <li><a><mwc-icon>home</mwc-icon></a></li>
-        <li><a><mwc-icon>star</mwc-icon></a></li>
+        <li ?active=${this.menuId !== 0 && !this.menuId}>
+          <a href="/menu-list"><mwc-icon>home</mwc-icon></a>
+        </li>
+        <li ?active=${this.menuId === 'favor'}>
+          <a href="/menu-list/favor"><mwc-icon>star</mwc-icon></a>
+        </li>
         ${topmenus.map(
           (menu, idx) => html`
-            <li><a href=${`/${menu.routing || 'menu-list'}/${idx}`} ?active=${idx == activeIndex}>${menu.name}</a></li>
+            <li ?active=${this.menuId === String(idx)}>
+              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${menu.name}</a>
+            </li>
           `
         )}
       </ul>

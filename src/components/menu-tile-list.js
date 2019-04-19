@@ -8,12 +8,7 @@ export default class MenuTileList extends LitElement {
           display: block;
           box-sizing: border-box;
         }
-        .nav {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          display: flex;
-        }
+
         #main > ul {
           display: grid;
           grid-template-columns: auto auto;
@@ -22,11 +17,13 @@ export default class MenuTileList extends LitElement {
           padding: 0;
           margin: 0;
         }
+
         #main > ul > li {
           border: 1px solid #ccc;
           margin: var(--menu-list-item-margin);
           padding: 10px;
         }
+
         li.text a {
           color: #fff;
           text-decoration: none;
@@ -40,24 +37,31 @@ export default class MenuTileList extends LitElement {
           width: 100%;
           height: 100%;
         }
+
         li.text:nth-child(7n + 1) {
           background-color: #4397de;
         }
+
         li.text:nth-child(7n + 2) {
           background-color: #33b8d0;
         }
+
         li.text:nth-child(7n + 3) {
           background-color: #4ab75f;
         }
+
         li.text:nth-child(7n + 4) {
           background-color: #93796f;
         }
+
         li.text:nth-child(7n + 5) {
           background-color: #f1ac42;
         }
+
         li.text:nth-child(7n + 6) {
           background-color: #ea6361;
         }
+
         li.text:nth-child(7n + 7) {
           background-color: #7386c3;
         }
@@ -100,9 +104,22 @@ export default class MenuTileList extends LitElement {
 
   render() {
     var topmenus = this.menus || []
-    var menuId = this.menuId || 0
-    var menu = topmenus[menuId]
-    var submenus = (menu && menu.children) || []
+    var menuId = this.menuId
+
+    if (menuId !== 0 && !menuId) {
+      /* all menus */
+      var submenus = topmenus.reduce((allmenu, topmenu) => {
+        let menus = (topmenu && topmenu.children) || []
+        menus.forEach(menu => allmenu.push(menu))
+        return allmenu
+      }, [])
+    } else if (menuId === 'favor') {
+      /* favorite menus */
+      var submenus = []
+    } else {
+      var menu = topmenus[menuId]
+      var submenus = (menu && menu.children) || []
+    }
 
     return html`
       <section id="main">

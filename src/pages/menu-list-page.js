@@ -16,7 +16,6 @@ class MenuListPage extends connect(store)(PageView) {
 
         menu-tile-list {
           flex: 1;
-
           overflow-y: auto;
         }
       `
@@ -34,8 +33,8 @@ class MenuListPage extends connect(store)(PageView) {
   render() {
     return html`
       <page-toolbar></page-toolbar>
-      
-      <menu-bar .menus=${this.menus}></menu-bar>
+
+      <menu-bar .menus=${this.menus} .menuId=${this.menuId}></menu-bar>
 
       <menu-tile-list
         .menus="${this.menus}"
