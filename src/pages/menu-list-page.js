@@ -1,6 +1,6 @@
 import { html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
-import { store, PageView } from '@things-factory/shell'
+import { store, PageView, ScrollbarStyles } from '@things-factory/shell'
 
 import '../components/menu-bar'
 import '../components/menu-tile-list'
@@ -8,6 +8,7 @@ import '../components/menu-tile-list'
 class MenuListPage extends connect(store)(PageView) {
   static get styles() {
     return [
+      ScrollbarStyles,
       css`
         :host {
           display: flex;
