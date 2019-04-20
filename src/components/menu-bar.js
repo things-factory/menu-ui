@@ -8,6 +8,8 @@ export default class MenuBar extends LitElement {
       css`
         :host {
           background-color: var(--secondary-dark-color);
+
+          overflow-x: hidden;
         }
 
         ul {
@@ -15,8 +17,7 @@ export default class MenuBar extends LitElement {
           list-style: none;
           margin: 5px 5px 0px 5px;
           padding: 5px 5px 0px 5px;
-          white-space:nowrap;
-          overflow-x:auto;
+          white-space: nowrap;
         }
 
         li {
@@ -29,14 +30,15 @@ export default class MenuBar extends LitElement {
         li[active] {
           border-color: red;
         }
-        li[active] a{
-          color:rgba(255,255,255,1);
-          font-weight:bold
-        }
 
         li a {
           text-decoration: none;
-          color:rgba(255,255,255,.8);
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        li[active] a {
+          color: rgba(255, 255, 255, 1);
+          font-weight: bold;
         }
 
         mwc-icon {
@@ -65,7 +67,7 @@ export default class MenuBar extends LitElement {
         <li ?active=${this.menuId === 'favor'}>
           <a href="/menu-list/favor"><mwc-icon>star</mwc-icon></a>
         </li>
-        
+
         ${topmenus.map(
           (menu, idx) => html`
             <li ?active=${this.menuId === String(idx)}>
@@ -75,6 +77,17 @@ export default class MenuBar extends LitElement {
         )}
       </ul>
     `
+  }
+
+  _onWheelEvent(e) {
+    var delta = Math.max(-1, Math.min(1, e.wheelDelta || -e.detail))
+    this.scrollLeft -= delta * 40
+
+    e.preventDefault()
+  }
+
+  firstUpdated() {
+    this.addEventListener('mousewheel', this._onWheelEvent.bind(this), false)
   }
 }
 
