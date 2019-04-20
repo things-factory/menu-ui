@@ -15,25 +15,28 @@ export default class MenuBar extends LitElement {
           list-style: none;
           margin: 5px 5px 0px 5px;
           padding: 5px 5px 0px 5px;
+          white-space:nowrap;
+          overflow-x:auto;
         }
 
         li {
           display: inline-block;
-          margin: 0 3px 0 3px;
-          padding: 0px 0 5px 0;
+          padding: 0 7px 5px 7px;
 
-          border-width: 0px 0px 3px 0px;
-          border-style: solid;
-          border-color: #242d30;
+          border-bottom: solid 3px #242d30;
         }
 
         li[active] {
           border-color: red;
         }
+        li[active] a{
+          color:rgba(255,255,255,1);
+          font-weight:bold
+        }
 
         li a {
           text-decoration: none;
-          color: white;
+          color:rgba(255,255,255,.8);
         }
 
         mwc-icon {

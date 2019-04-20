@@ -21,7 +21,6 @@ export default class MenuTileList extends LitElement {
         }
 
         ul > li {
-          border: 1px solid #ccc;
           margin: var(--menu-list-item-margin);
           padding: 10px;
 
