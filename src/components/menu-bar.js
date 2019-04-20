@@ -58,9 +58,11 @@ export default class MenuBar extends LitElement {
         <li ?active=${this.menuId !== 0 && !this.menuId}>
           <a href="/menu-list"><mwc-icon>home</mwc-icon></a>
         </li>
+
         <li ?active=${this.menuId === 'favor'}>
           <a href="/menu-list/favor"><mwc-icon>star</mwc-icon></a>
         </li>
+        
         ${topmenus.map(
           (menu, idx) => html`
             <li ?active=${this.menuId === String(idx)}>

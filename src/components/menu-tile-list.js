@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit-element'
 
+import '@material/mwc-icon/mwc-icon'
+
 export default class MenuTileList extends LitElement {
   static get styles() {
     return [
@@ -9,7 +11,7 @@ export default class MenuTileList extends LitElement {
           box-sizing: border-box;
         }
 
-        #main > ul {
+        ul {
           display: grid;
           grid-template-columns: auto auto;
           grid-auto-rows: 110px;
@@ -18,10 +20,26 @@ export default class MenuTileList extends LitElement {
           margin: 0;
         }
 
-        #main > ul > li {
+        ul > li {
           border: 1px solid #ccc;
           margin: var(--menu-list-item-margin);
           padding: 10px;
+
+          position: relative;
+        }
+
+        mwc-icon {
+          position: absolute;
+          right: 8px;
+          top: 8px;
+          
+          color: var(--secondary-dark-color);
+          font-size: 1.0em;
+        }
+
+        mwc-icon[selected] {
+          color: white;
+          text-shadow: 1px 1px 1px var(--secondary-dark-color);
         }
 
         li.text a {
@@ -67,25 +85,25 @@ export default class MenuTileList extends LitElement {
         }
 
         @media (min-width: 600px) {
-          #main > ul {
+          ul {
             grid-template-columns: auto auto auto;
             grid-auto-rows: 120px;
           }
         }
         @media (min-width: 1200px) {
-          #main > ul {
+          ul {
             grid-template-columns: auto auto auto auto;
             grid-auto-rows: 130px;
           }
         }
         @media (min-width: 1800px) {
-          #main > ul {
+          ul {
             grid-template-columns: auto auto auto auto auto;
             grid-auto-rows: 140px;
           }
         }
         @media (min-width: 2400px) {
-          #main > ul {
+          ul {
             grid-template-columns: auto auto auto auto auto auto;
             grid-auto-rows: 150px;
           }
@@ -122,7 +140,6 @@ export default class MenuTileList extends LitElement {
     }
 
     return html`
-      <section id="main">
         <ul>
           ${submenus.map(
             subMenu =>
@@ -146,11 +163,16 @@ export default class MenuTileList extends LitElement {
                               <a href="${this.routingTypes[subMenu.routing_type]}">${subMenu.name}</a>
                             `}
                       `}
+
+                  ${Math.random() > 0.5 ? html`
+                    <mwc-icon>star_border</mwc-icon>
+                  `: html`
+                    <mwc-icon selected>star</mwc-icon>
+                  `}
                 </li>
               `
           )}
         </ul>
-      </section>
     `
   }
 }

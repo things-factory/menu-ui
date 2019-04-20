@@ -6,7 +6,7 @@ export default {
   routes: [
     {
       tagname: 'menu-list-page',
-      pageName: 'menu-list'
+      page: 'menu-list'
     }
   ],
   bootstrap
