@@ -71,7 +71,7 @@ export default class MenuBar extends LitElement {
         ${topmenus.map(
           (menu, idx) => html`
             <li ?active=${this.menuId === String(idx)}>
-              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${menu.name}</a>
+              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${menu.title}</a>
             </li>
           `
         )}

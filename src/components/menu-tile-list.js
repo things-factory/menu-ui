@@ -31,9 +31,9 @@ export default class MenuTileList extends LitElement {
           position: absolute;
           right: 8px;
           top: 8px;
-          
+
           color: var(--secondary-dark-color);
-          font-size: 1.0em;
+          font-size: 1em;
         }
 
         mwc-icon[selected] {
@@ -139,39 +139,40 @@ export default class MenuTileList extends LitElement {
     }
 
     return html`
-        <ul>
-          ${submenus.map(
-            subMenu =>
-              html`
-                <li
-                  class="${subMenu.class} text"
-                  style="grid-row: span ${subMenu.routing_type.toUpperCase() === 'STATIC' ? 1 : 2}"
-                >
-                  ${subMenu.routing_type.toUpperCase() === 'STATIC'
-                    ? html`
-                        <a href="${subMenu.routing}">${subMenu.name}</a>
-                      `
-                    : html`
-                        ${subMenu.id_field
-                          ? html`
-                              <a href="${this.routingTypes[subMenu.routing_type]}/${subMenu[subMenu.id_field]}"
-                                >${subMenu.name}</a
-                              >
-                            `
-                          : html`
-                              <a href="${this.routingTypes[subMenu.routing_type]}">${subMenu.name}</a>
-                            `}
-                      `}
-
-                  ${Math.random() > 0.5 ? html`
-                    <mwc-icon>star_border</mwc-icon>
-                  `: html`
-                    <mwc-icon selected>star</mwc-icon>
-                  `}
-                </li>
-              `
-          )}
-        </ul>
+      <ul>
+        ${submenus.map(
+          subMenu =>
+            html`
+              <li
+                class="${subMenu.class} text"
+                style="grid-row: span ${subMenu.routing_type.toUpperCase() === 'STATIC' ? 1 : 2}"
+              >
+                ${subMenu.routing_type.toUpperCase() === 'STATIC'
+                  ? html`
+                      <a href="${subMenu.routing}">${subMenu.title}</a>
+                    `
+                  : html`
+                      ${subMenu.id_field
+                        ? html`
+                            <a href="${this.routingTypes[subMenu.routing_type]}/${subMenu[subMenu.id_field]}"
+                              >${subMenu.title}</a
+                            >
+                          `
+                        : html`
+                            <a href="${this.routingTypes[subMenu.routing_type]}">${subMenu.title}</a>
+                          `}
+                    `}
+                ${Math.random() > 0.5
+                  ? html`
+                      <mwc-icon>star_border</mwc-icon>
+                    `
+                  : html`
+                      <mwc-icon selected>star</mwc-icon>
+                    `}
+              </li>
+            `
+        )}
+      </ul>
     `
   }
 }
