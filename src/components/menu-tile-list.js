@@ -13,7 +13,7 @@ export default class MenuTileList extends LitElement {
 
         ul {
           display: grid;
-          grid-template-columns: auto auto;
+          grid-template-columns: 1fr 1fr;
           grid-auto-rows: 110px;
           list-style: none;
           padding: 0;
@@ -85,25 +85,25 @@ export default class MenuTileList extends LitElement {
 
         @media (min-width: 600px) {
           ul {
-            grid-template-columns: auto auto auto;
+            grid-template-columns: 1fr 1fr 1fr;
             grid-auto-rows: 120px;
           }
         }
         @media (min-width: 1200px) {
           ul {
-            grid-template-columns: auto auto auto auto;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
             grid-auto-rows: 130px;
           }
         }
         @media (min-width: 1800px) {
           ul {
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-auto-rows: 140px;
           }
         }
         @media (min-width: 2400px) {
           ul {
-            grid-template-columns: auto auto auto auto auto auto;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
             grid-auto-rows: 150px;
           }
         }
