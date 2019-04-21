@@ -17,6 +17,7 @@
     "@things-factory/auth-provider-session": "*",
     "@things-factory/auth-ui-session": "*",
     "@things-factory/menu-provider": "*",
+    "@things-factory/resource-ui-mobile": "*",
     "@things-factory/tester": "*"
   }
 }
