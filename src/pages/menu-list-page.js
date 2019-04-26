@@ -33,8 +33,6 @@ class MenuListPage extends connect(store)(PageView) {
 
   render() {
     return html`
-      <page-toolbar></page-toolbar>
-
       <menu-bar .menus=${this.menus} .menuId=${this.menuId}></menu-bar>
 
       <menu-tile-list
