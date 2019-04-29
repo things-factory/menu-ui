@@ -48,7 +48,7 @@ class MenuListPage extends connect(store)(PageView) {
   stateChanged(state) {
     this.menus = state.menu.menus
     this.routingTypes = state.menu.routingTypes
-    this.menuId = state.app.resourceId
+    this.menuId = state.route.resourceId
   }
 }
 
