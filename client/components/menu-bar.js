@@ -1,7 +1,6 @@
-import { LitElement, html, css } from 'lit-element'
-
 import '@material/mwc-icon/mwc-icon'
 import { i18next } from '@things-factory/i18n-base'
+import { css, html, LitElement } from 'lit-element'
 
 export default class MenuBar extends LitElement {
   static get styles() {
@@ -72,7 +71,7 @@ export default class MenuBar extends LitElement {
         ${topmenus.map(
           (menu, idx) => html`
             <li ?active=${this.menuId === String(idx)}>
-              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${i18next.t(menu.name)}</a>
+              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${i18next.t(`menu.${menu.name}`)}</a>
             </li>
           `
         )}

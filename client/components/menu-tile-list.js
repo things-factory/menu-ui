@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit-element'
-
 import '@material/mwc-icon/mwc-icon'
+import { css, html, LitElement } from 'lit-element'
+import { i18next } from '@things-factory/i18n-base'
 
 export default class MenuTileList extends LitElement {
   static get styles() {
@@ -145,21 +145,23 @@ export default class MenuTileList extends LitElement {
             html`
               <li
                 class="${subMenu.class} text"
-                style="grid-row: span ${subMenu.routing_type.toUpperCase() === 'STATIC' ? 1 : 2}"
+                style="grid-row: span ${subMenu.routingType.toUpperCase() === 'STATIC' ? 1 : 2}"
               >
-                ${subMenu.routing_type.toUpperCase() === 'STATIC'
+                ${subMenu.routingType.toUpperCase() === 'STATIC'
                   ? html`
-                      <a href="${subMenu.routing}">${subMenu.title}</a>
+                      <a href="${subMenu.routing}">${i18next.t(`title.${subMenu.title}`)}</a>
                     `
                   : html`
-                      ${subMenu.id_field
+                      ${subMenu.idField
                         ? html`
-                            <a href="${this.routingTypes[subMenu.routing_type]}/${subMenu[subMenu.id_field]}"
-                              >${subMenu.title}</a
+                            <a href="${this.routingTypes[subMenu.routingType]}/${subMenu[subMenu.idField]}"
+                              >${i18next.t(`title.${subMenu.title}`)}</a
                             >
                           `
                         : html`
-                            <a href="${this.routingTypes[subMenu.routing_type]}">${subMenu.title}</a>
+                            <a href="${this.routingTypes[subMenu.routingType]}"
+                              >${i18next.t(`title.${subMenu.title}`)}</a
+                            >
                           `}
                     `}
                 ${Math.random() > 0.5
