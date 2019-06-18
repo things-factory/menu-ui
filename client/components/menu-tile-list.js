@@ -149,7 +149,7 @@ export default class MenuTileList extends LitElement {
               >
                 ${subMenu.routingType.toUpperCase() === 'STATIC'
                   ? html`
-                      <a href="${subMenu.routing}">${i18next.t(`title.${subMenu.name}`)}</a>
+                      <a href="${subMenu.template}">${i18next.t(`title.${subMenu.name}`)}</a>
                     `
                   : html`
                       ${subMenu.idField
