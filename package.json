@@ -28,9 +28,6 @@
     "@things-factory/shell": "*"
   },
   "devDependencies": {
-    "@things-factory/auth-provider-session": "*",
-    "@things-factory/auth-ui-session": "*",
-    "@things-factory/resource-ui": "*",
     "@things-factory/tester": "*"
   }
 }
