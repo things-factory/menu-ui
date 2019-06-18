@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/menu-ui",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -28,8 +28,8 @@
     "@things-factory/shell": "*"
   },
   "devDependencies": {
-    "@things-factory/auth-provider-session": "*",
-    "@things-factory/auth-ui-session": "*",
+    "@things-factory/auth-provider-jwt": "*",
+    "@things-factory/auth-ui-jwt": "*",
     "@things-factory/resource-ui": "*",
     "@things-factory/tester": "*"
   }
