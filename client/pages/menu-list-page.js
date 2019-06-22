@@ -40,11 +40,7 @@ class MenuListPage extends connect(store)(PageView) {
     return html`
       <menu-bar .menus=${this.menus} .menuId=${this.menuId} @refresh=${this.refreshMenus.bind(this)}></menu-bar>
 
-      <menu-tile-list
-        .menus="${this.menus}"
-        .routingTypes="${this.routingTypes}"
-        .menuId="${this.menuId}"
-      ></menu-tile-list>
+      <menu-tile-list .menus=${this.menus} .routingTypes=${this.routingTypes} .menuId=${this.menuId}></menu-tile-list>
     `
   }
 
