@@ -1,6 +1,9 @@
 import { html, css } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
-import { store, PageView, ScrollbarStyles } from '@things-factory/shell'
+import gql from 'graphql-tag'
+
+import { store, client, PageView, ScrollbarStyles } from '@things-factory/shell'
+import { updateMenu } from '@things-factory/menu-base'
 
 import '../components/menu-bar'
 import '../components/menu-tile-list'
@@ -35,7 +38,7 @@ class MenuListPage extends connect(store)(PageView) {
 
   render() {
     return html`
-      <menu-bar .menus=${this.menus} .menuId=${this.menuId}></menu-bar>
+      <menu-bar .menus=${this.menus} .menuId=${this.menuId} @refresh=${this.refreshMenus.bind(this)}></menu-bar>
 
       <menu-tile-list
         .menus="${this.menus}"
@@ -43,6 +46,33 @@ class MenuListPage extends connect(store)(PageView) {
         .menuId="${this.menuId}"
       ></menu-tile-list>
     `
+  }
+
+  firstUpdated() {
+    this.refreshMenus()
+  }
+
+  async refreshMenus() {
+    const response = await client.query({
+      query: gql`
+        query {
+          menus: userMenus {
+            id
+            name
+            children {
+              id
+              name
+              routingType
+              idField
+              resourceName
+              template
+            }
+          }
+        }
+      `
+    })
+
+    store.dispatch(updateMenu(response.data.menus))
   }
 
   stateChanged(state) {

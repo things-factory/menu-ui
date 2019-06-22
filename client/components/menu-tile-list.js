@@ -138,6 +138,8 @@ export default class MenuTileList extends LitElement {
       var submenus = (menu && menu.children) || []
     }
 
+    console.log(this.routingTypes)
+
     return html`
       <ul>
         ${submenus.map(
