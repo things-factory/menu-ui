@@ -1,6 +1,8 @@
-import '@material/mwc-icon/mwc-icon'
-import { i18next } from '@things-factory/i18n-base'
 import { css, html, LitElement } from 'lit-element'
+
+import '@material/mwc-icon'
+
+import { i18next } from '@things-factory/i18n-base'
 
 export default class MenuBar extends LitElement {
   static get styles() {
