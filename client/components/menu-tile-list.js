@@ -30,6 +30,7 @@ export default class MenuTileList extends LitElement {
         }
 
         mwc-icon {
+          cursor: pointer;
           position: absolute;
           right: 8px;
           top: 8px;
@@ -117,7 +118,8 @@ export default class MenuTileList extends LitElement {
     return {
       menuId: String,
       menus: Array,
-      routingTypes: Object
+      routingTypes: Object,
+      favorites: Array
     }
   }
 
@@ -133,8 +135,15 @@ export default class MenuTileList extends LitElement {
         return allmenu
       }, [])
     } else if (menuId === 'favor') {
-      /* favorite menus */
-      var submenus = []
+      var submenus = topmenus.reduce((allmenu, topmenu) => {
+        let menus = (topmenu && topmenu.children) || []
+        menus.forEach(menu => {
+          if (this.favorites.includes(this._getFullRouting(menu))) {
+            allmenu.push(menu)
+          }
+        })
+        return allmenu
+      }, [])
     } else {
       var menu = topmenus[menuId]
       var submenus = (menu && menu.children) || []
@@ -142,42 +151,43 @@ export default class MenuTileList extends LitElement {
 
     return html`
       <ul>
-        ${submenus.map(
-          subMenu =>
-            html`
-              <li
-                class="${subMenu.class} text"
-                style="grid-row: span ${subMenu.routingType.toUpperCase() === 'STATIC' ? 1 : 2}"
+        ${submenus.map(subMenu => {
+          const routing = this._getFullRouting(subMenu)
+
+          return html`
+            <li
+              class="${subMenu.class} text"
+              style="grid-row: span ${subMenu.routingType.toUpperCase() === 'STATIC' ? 1 : 2}"
+            >
+              <a href="${routing}">${subMenu.name}</a>
+
+              <mwc-icon
+                ?selected="${(this.favorites || []).includes(routing)}"
+                @click="${e => {
+                  this.dispatchEvent(
+                    new CustomEvent('favoriteClick', {
+                      detail: {
+                        routing,
+                        currentState: e.currentTarget.hasAttribute('selected')
+                      }
+                    })
+                  )
+                }}"
+                >${this.favorites || [].includes(routing) ? 'star' : 'star_border'}</mwc-icon
               >
-                ${subMenu.routingType.toUpperCase() === 'STATIC'
-                  ? html`
-                      <a href="${subMenu.template}">${i18next.t(`title.${subMenu.name}`)}</a>
-                    `
-                  : html`
-                      ${subMenu.idField
-                        ? html`
-                            <a href="${this.routingTypes[subMenu.routingType]}/${subMenu[subMenu.idField]}"
-                              >${i18next.t(`title.${subMenu.name}`)}</a
-                            >
-                          `
-                        : html`
-                            <a href="${this.routingTypes[subMenu.routingType]}"
-                              >${i18next.t(`title.${subMenu.name}`)}</a
-                            >
-                          `}
-                    `}
-                ${Math.random() > 0.5
-                  ? html`
-                      <mwc-icon>star_border</mwc-icon>
-                    `
-                  : html`
-                      <mwc-icon selected>star</mwc-icon>
-                    `}
-              </li>
-            `
-        )}
+            </li>
+          `
+        })}
       </ul>
     `
+  }
+
+  _getFullRouting(menu) {
+    return menu.routingType.toUpperCase() === 'STATIC'
+      ? menu.template
+      : menu.idField
+      ? `${this.routingTypes[menu.routingType]}/${menu[menu.idField]}`
+      : `${this.routingTypes[menu.routingType]}`
   }
 }
 

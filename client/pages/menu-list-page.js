@@ -1,10 +1,9 @@
-import { html, css } from 'lit-element'
-import { connect } from 'pwa-helpers/connect-mixin.js'
-import gql from 'graphql-tag'
-
-import { store, client, PageView, ScrollbarStyles } from '@things-factory/shell'
+import { ADD_FAVORITE, REMOVE_FAVORITE } from '@things-factory/fav-base'
 import { updateMenu } from '@things-factory/menu-base'
-
+import { client, PageView, ScrollbarStyles, store } from '@things-factory/shell'
+import gql from 'graphql-tag'
+import { css, html } from 'lit-element'
+import { connect } from 'pwa-helpers/connect-mixin.js'
 import '../components/menu-bar'
 import '../components/menu-tile-list'
 
@@ -32,7 +31,8 @@ class MenuListPage extends connect(store)(PageView) {
     return {
       menuId: String,
       menus: Array,
-      routingTypes: Object
+      routingTypes: Object,
+      myFavorites: Array
     }
   }
 
@@ -40,12 +40,19 @@ class MenuListPage extends connect(store)(PageView) {
     return html`
       <menu-bar .menus=${this.menus} .menuId=${this.menuId} @refresh=${this.refreshMenus.bind(this)}></menu-bar>
 
-      <menu-tile-list .menus=${this.menus} .routingTypes=${this.routingTypes} .menuId=${this.menuId}></menu-tile-list>
+      <menu-tile-list
+        .menus=${this.menus}
+        .routingTypes=${this.routingTypes}
+        .menuId=${this.menuId}
+        .favorites="${this.myFavorites}"
+        @favoriteClick="${this._onFavoriteClickHandler}"
+      ></menu-tile-list>
     `
   }
 
   firstUpdated() {
     this.refreshMenus()
+    this._getFavorites()
   }
 
   async refreshMenus() {
@@ -71,7 +78,68 @@ class MenuListPage extends connect(store)(PageView) {
     store.dispatch(updateMenu(response.data.menus))
   }
 
+  async _getFavorites() {
+    const response = await client.query({
+      query: gql`
+        query {
+          myFavorites(userId: "${this._email}") {
+            id
+            userId
+            routing
+          }
+        }
+      `
+    })
+
+    this.myFavorites = response.data.myFavorites.map(favorite => favorite.routing)
+  }
+
+  _onFavoriteClickHandler(event) {
+    const { currentState, routing } = event.detail
+    if (currentState) {
+      this._removeFavorite(routing)
+    } else {
+      this._addFavorite(routing)
+    }
+  }
+
+  async _removeFavorite(routing) {
+    await client.query({
+      query: gql`
+        mutation {
+          deleteFavorite(userId: "${this._email}", routing: "${routing}") {
+            id
+            userId
+            routing
+          }
+        }
+      `
+    })
+
+    this._getFavorites()
+  }
+
+  async _addFavorite(routing) {
+    await client.query({
+      query: gql`
+        mutation {
+          createFavorite(favorite: {
+            userId: "${this._email}"
+            routing: "${routing}"
+          }) {
+            id
+            userId
+            routing
+          }
+        }
+      `
+    })
+
+    this._getFavorites()
+  }
+
   stateChanged(state) {
+    this._email = state.auth.user.email
     this.menus = state.menu.menus
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
