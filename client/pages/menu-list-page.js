@@ -1,16 +1,21 @@
-import { ADD_FAVORITE, REMOVE_FAVORITE } from '@things-factory/fav-base'
-import { updateMenu } from '@things-factory/menu-base'
-import { client, PageView, ScrollbarStyles, store } from '@things-factory/shell'
-import gql from 'graphql-tag'
 import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
+import gql from 'graphql-tag'
+
+import PullToRefresh from 'pulltorefreshjs'
+
+import { client, PageView, ScrollbarStyles, store } from '@things-factory/shell'
+import { updateMenu } from '@things-factory/menu-base'
+
 import '../components/menu-bar'
 import '../components/menu-tile-list'
+import { pulltorefreshStyle } from './pulltorefresh-style'
 
 class MenuListPage extends connect(store)(PageView) {
   static get styles() {
     return [
       ScrollbarStyles,
+      pulltorefreshStyle,
       css`
         :host {
           display: flex;
@@ -50,10 +55,10 @@ class MenuListPage extends connect(store)(PageView) {
     `
   }
 
-  firstUpdated() {
-    this.refreshMenus()
-    this._getFavorites()
-  }
+  // firstUpdated() {
+  //   this.refreshMenus()
+  //   this._getFavorites()
+  // }
 
   async refreshMenus() {
     const response = await client.query({
@@ -143,6 +148,35 @@ class MenuListPage extends connect(store)(PageView) {
     this.menus = state.menu.menus
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
+  }
+
+  async activated(active) {
+    if (active) {
+      this.refreshMenus()
+      this._getFavorites()
+    }
+
+    if (active) {
+      await this.updateComplete
+      /*
+       * 첫번째 active 시에는 element가 생성되어있지 않으므로,
+       * 꼭 updateComplete를 기다린 후에 mainElement설정을 해야한다.
+       */
+      this._ptr = PullToRefresh.init({
+        mainElement: this.shadowRoot.querySelector('menu-tile-list'),
+        distIgnore: 30,
+        instructionsPullToRefresh: 'Pull down to refresh',
+        instructionsRefreshing: 'Refreshing',
+        instructionsReleaseToRefresh: 'Release to refresh',
+        onRefresh: async () => {
+          this.refreshMenus()
+          this._getFavorites()
+        }
+      })
+    } else {
+      this._ptr && this._ptr.destroy()
+      delete this._ptr
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/menu-ui",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -26,7 +26,8 @@
     "@things-factory/fav-base": "*",
     "@things-factory/i18n-ui": "*",
     "@things-factory/menu-base": "*",
-    "@things-factory/shell": "*"
+    "@things-factory/shell": "*",
+    "pulltorefreshjs": "^0.1.17"
   },
   "devDependencies": {
     "@things-factory/tester": "*"
