@@ -4,18 +4,17 @@ import gql from 'graphql-tag'
 
 import PullToRefresh from 'pulltorefreshjs'
 
-import { client, PageView, ScrollbarStyles, store } from '@things-factory/shell'
+import { store, client, PageView, ScrollbarStyles, PullToRefreshStyles } from '@things-factory/shell'
 import { updateMenu } from '@things-factory/menu-base'
 
 import '../components/menu-bar'
 import '../components/menu-tile-list'
-import { pulltorefreshStyle } from './pulltorefresh-style'
 
 class MenuListPage extends connect(store)(PageView) {
   static get styles() {
     return [
       ScrollbarStyles,
-      pulltorefreshStyle,
+      PullToRefreshStyles,
       css`
         :host {
           display: flex;
