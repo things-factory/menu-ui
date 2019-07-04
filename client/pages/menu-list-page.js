@@ -143,7 +143,7 @@ class MenuListPage extends connect(store)(PageView) {
   }
 
   stateChanged(state) {
-    this._email = state.auth.user && state.auth.user.email
+    this._email = state.auth.user ? state.auth.user.email : ''
     this.menus = state.menu.menus
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
