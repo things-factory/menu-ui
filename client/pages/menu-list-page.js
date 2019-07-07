@@ -54,10 +54,11 @@ class MenuListPage extends connect(store)(PageView) {
     `
   }
 
-  // firstUpdated() {
-  //   this.refreshMenus()
-  //   this._getFavorites()
-  // }
+  get context() {
+    return {
+      title: 'Menu'
+    }
+  }
 
   async refreshMenus() {
     const response = await client.query({
