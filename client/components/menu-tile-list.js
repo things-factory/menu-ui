@@ -2,8 +2,6 @@ import { css, html, LitElement } from 'lit-element'
 
 import '@material/mwc-icon'
 
-import { i18next } from '@things-factory/i18n-base'
-
 export default class MenuTileList extends LitElement {
   static get styles() {
     return [

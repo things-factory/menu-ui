@@ -4,8 +4,6 @@ import '@material/mwc-icon'
 
 import ScrollBooster from 'scrollbooster'
 
-import { i18next } from '@things-factory/i18n-base'
-
 export default class MenuBar extends LitElement {
   static get styles() {
     return [
@@ -83,7 +81,7 @@ export default class MenuBar extends LitElement {
         ${topmenus.map(
           (menu, idx) => html`
             <li ?active=${this.menuId === String(idx)}>
-              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${i18next.t(`menu.${menu.name}`)}</a>
+              <a href=${`/${menu.routing || 'menu-list'}/${idx}`}>${menu.name}</a>
             </li>
           `
         )}
