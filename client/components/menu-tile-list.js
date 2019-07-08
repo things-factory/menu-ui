@@ -128,13 +128,13 @@ export default class MenuTileList extends LitElement {
     if (menuId !== 0 && !menuId) {
       /* all menus */
       var submenus = topmenus.reduce((allmenu, topmenu) => {
-        let menus = (topmenu && topmenu.children) || []
+        let menus = (topmenu && topmenu.childrens) || []
         menus.forEach(menu => allmenu.push(menu))
         return allmenu
       }, [])
     } else if (menuId === 'favor') {
       var submenus = topmenus.reduce((allmenu, topmenu) => {
-        let menus = (topmenu && topmenu.children) || []
+        let menus = (topmenu && topmenu.childrens) || []
         menus.forEach(menu => {
           if (this.favorites.includes(this._getFullRouting(menu))) {
             allmenu.push(menu)
@@ -144,7 +144,7 @@ export default class MenuTileList extends LitElement {
       }, [])
     } else {
       var menu = topmenus[menuId]
-      var submenus = (menu && menu.children) || []
+      var submenus = (menu && menu.childrens) || []
     }
 
     return html`
