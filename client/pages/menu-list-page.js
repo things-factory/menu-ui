@@ -67,7 +67,7 @@ class MenuListPage extends connect(store)(PageView) {
           menus: userMenus {
             id
             name
-            children {
+            childrens {
               id
               name
               routingType
