@@ -183,9 +183,9 @@ export default class MenuTileList extends LitElement {
   _getFullRouting(menu) {
     return menu.routingType.toUpperCase() === 'STATIC'
       ? menu.template
-      : menu.idField
-      ? `${this.routingTypes[menu.routingType]}/${menu[menu.idField]}`
-      : `${this.routingTypes[menu.routingType]}`
+      : menu.titleField
+      ? `${this.routingTypes[menu.routingType]}/${menu[menu.titleField]}`
+      : `${this.routingTypes[menu.routingType]}/${menu.name}`
   }
 }
 
