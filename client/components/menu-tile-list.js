@@ -126,13 +126,7 @@ export default class MenuTileList extends LitElement {
     var menuId = this.menuId
 
     if (menuId !== 0 && !menuId) {
-      /* all menus */
-      var submenus = topmenus.reduce((allmenu, topmenu) => {
-        let menus = (topmenu && topmenu.childrens) || []
-        menus.forEach(menu => allmenu.push(menu))
-        return allmenu
-      }, [])
-    } else if (menuId === 'favor') {
+      /* favorite menus */
       var submenus = topmenus.reduce((allmenu, topmenu) => {
         let menus = (topmenu && topmenu.childrens) || []
         menus.forEach(menu => {

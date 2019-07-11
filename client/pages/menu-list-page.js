@@ -80,7 +80,7 @@ class MenuListPage extends connect(store)(PageView) {
       `
     })
 
-    store.dispatch(updateMenu(response.data.menus))
+    this.menus = response.data.menus
   }
 
   async _getFavorites() {
@@ -145,7 +145,6 @@ class MenuListPage extends connect(store)(PageView) {
 
   stateChanged(state) {
     this._email = state.auth.user ? state.auth.user.email : ''
-    this.menus = state.menu.menus
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
   }
