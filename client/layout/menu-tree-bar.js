@@ -43,7 +43,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
                   const routing = this._getFullRouting(subMenu)
 
                   return html`
-                    <li ?active=${routing === location.pathname.substr(1)}>
+                    <li ?active=${routing === decodeURIComponent(location.pathname.substr(1))}>
                       <a href=${routing}>${subMenu.name}</a>
                     </li>
                   `
