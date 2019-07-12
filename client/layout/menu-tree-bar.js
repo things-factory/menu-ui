@@ -14,6 +14,18 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           background-color: var(--secondary-dark-color);
         }
 
+        [expanded] > span {
+          font-weight: bold;
+        }
+
+        [grouplevel] {
+          display: none;
+        }
+
+        [expanded] > [grouplevel] {
+          display: block;
+        }
+
         li[active] {
           background-color: tomato;
         }
@@ -32,13 +44,13 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <ul>
+      <ul toplevel>
         ${(this.menus || []).map(
           menu => html`
             <li>
-              <span>${menu.name}</span>
+              <span @click=${e => e.target.parentElement.toggleAttribute('expanded')}>${menu.name}</span>
 
-              <ul>
+              <ul grouplevel>
                 ${menu.childrens.map(subMenu => {
                   const routing = this._getFullRouting(subMenu)
 
@@ -58,6 +70,15 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
 
   firstUpdated() {
     this.refreshMenus()
+  }
+
+  async updated() {
+    await this.updateComplete
+
+    var active = this.shadowRoot.querySelector('[active]')
+    if (active) {
+      active.parentElement.parentElement.setAttribute('expanded', '')
+    }
   }
 
   stateChanged(state) {
