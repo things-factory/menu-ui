@@ -11,7 +11,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     return [
       css`
         :host {
-          background-color: var(--secondary-dark-color);
+          background-color: var(--menu-tree-background-color);
         }
 
         [expanded] > span {

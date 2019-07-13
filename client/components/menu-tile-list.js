@@ -21,7 +21,7 @@ export default class MenuTileList extends LitElement {
         }
 
         ul > li {
-          margin: var(--menu-list-item-margin);
+          margin: var(--menu-tile-list-item-margin);
           padding: 10px;
 
           position: relative;
@@ -33,13 +33,13 @@ export default class MenuTileList extends LitElement {
           right: 8px;
           top: 8px;
 
-          color: var(--secondary-dark-color);
+          color: var(--menu-tile-list-favorite-color);
           font-size: 1em;
         }
 
         mwc-icon[selected] {
           color: white;
-          text-shadow: 1px 1px 1px var(--secondary-dark-color);
+          text-shadow: 1px 1px 1px var(--menu-tile-list-favorite-color);
         }
 
         li.text a {

@@ -9,7 +9,7 @@ export default class MenuBar extends LitElement {
     return [
       css`
         :host {
-          background-color: var(--secondary-dark-color);
+          background-color: var(--menu-bar-background-color, #242d30);
 
           overflow-x: hidden;
         }
@@ -26,7 +26,7 @@ export default class MenuBar extends LitElement {
           display: inline-block;
           padding: 0 7px 5px 7px;
 
-          border-bottom: solid 3px #242d30;
+          border-bottom: solid 3px var(--menu-bar-background-color, #242d30);
         }
 
         li[active] {
