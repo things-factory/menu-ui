@@ -10,12 +10,49 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   static get styles() {
     return [
       css`
-        :host {
-          background-color: var(--menu-tree-background-color);
+        ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
         }
-
+        li {
+          border-bottom: var(--menu-tree-toplevel-border-bottom);
+        }
+        [grouplevel] li {
+          border-bottom: var(--menu-tree-grouplevel-border-bottom);
+        }
+        span,
+        a {
+          display: block;
+          text-decoration: none;
+        }
+        span {
+          padding: 9px 9px 7px 10px;
+          font: var(--menu-tree-toplevel-font);
+          color: var(--menu-tree-toplevel-color);
+        }
+        a {
+          background-color: rgba(0, 0, 0, 0.4);
+          padding: 7px 7px 6px 15px;
+          font: var(--menu-tree-grouplevel-font);
+          color: var(--menu-tree-grouplevel-color);
+        }
+        span::before {
+          content: '';
+          display: inline-block;
+          width: var(--menu-tree-toplevel-icon-size);
+          height: var(--menu-tree-toplevel-icon-size);
+          border: var(--menu-tree-toplevel-icon-border);
+          border-radius: 50%;
+          margin-right: 5px;
+        }
+        a::before {
+          content: '-';
+          margin-right: 4px;
+        }
         [expanded] > span {
           font-weight: bold;
+          color: var(--menu-tree-focus-color);
         }
 
         [grouplevel] {
@@ -26,8 +63,12 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           display: block;
         }
 
-        li[active] {
-          background-color: tomato;
+        li[active] a {
+          color: var(--menu-tree-focus-color);
+          font-weight: bold;
+          border-left: var(--menu-tree-grouplevel-active-border-left);
+          background-color: rgba(0, 0, 0, 0.6);
+          padding-left: 12px;
         }
       `
     ]
