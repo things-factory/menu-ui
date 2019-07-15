@@ -10,6 +10,10 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   static get styles() {
     return [
       css`
+        :host {
+          display: block;
+          min-width: 180px;
+        }
         ul {
           list-style: none;
           margin: 0;
