@@ -1,7 +1,7 @@
 import { html } from 'lit-html'
 
 import { store, isMobileDevice } from '@things-factory/shell'
-import { TOOL_POSITION, APPEND_NAVBAR } from '@things-factory/layout-base'
+import { APPEND_NAVBAR } from '@things-factory/layout-base'
 
 export default function bootstrap() {
   if (!isMobileDevice()) {
@@ -9,8 +9,9 @@ export default function bootstrap() {
 
     store.dispatch({
       type: APPEND_NAVBAR,
+      name: 'menu-tree-bar',
       navbar: {
-        position: TOOL_POSITION.CENTER,
+        show: true,
         template: html`
           <menu-tree-bar></menu-tree-bar>
         `
