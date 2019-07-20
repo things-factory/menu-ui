@@ -1,21 +1,21 @@
 import { html } from 'lit-html'
 
-import { store, isMobileDevice } from '@things-factory/shell'
-import { APPEND_NAVBAR } from '@things-factory/layout-base'
+import { isMobileDevice } from '@things-factory/shell'
+import { appendViewpart, VIEWPART_POSITION } from '@things-factory/layout-base'
 
 export default function bootstrap() {
   if (!isMobileDevice()) {
     import('./layout/menu-tree-bar')
 
-    store.dispatch({
-      type: APPEND_NAVBAR,
+    appendViewpart({
       name: 'menu-tree-bar',
-      navbar: {
+      viewpart: {
         show: true,
         template: html`
           <menu-tree-bar></menu-tree-bar>
         `
-      }
+      },
+      position: VIEWPART_POSITION.NAVBAR
     })
   }
 }
