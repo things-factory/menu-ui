@@ -83,7 +83,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       menuId: String,
       menus: Array,
       routingTypes: Object,
-      page: Object
+      page: Object,
+      user: Object
     }
   }
 
@@ -113,11 +114,11 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     `
   }
 
-  firstUpdated() {
-    this.refreshMenus()
-  }
+  async updated(changes) {
+    if (changes.has('user')) {
+      this.refreshMenus()
+    }
 
-  async updated() {
     await this.updateComplete
 
     var active = this.shadowRoot.querySelector('[active]')
@@ -130,6 +131,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
     this.page = state.route.page
+    this.user = state.auth.user
   }
 
   _getFullRouting(menu) {

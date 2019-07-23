@@ -153,18 +153,7 @@ export default class MenuTileList extends LitElement {
             >
               <a href="${routing}">${subMenu.name}</a>
 
-              <mwc-icon
-                ?selected="${(this.favorites || []).includes(routing)}"
-                @click="${e => {
-                  this.dispatchEvent(
-                    new CustomEvent('favoriteClick', {
-                      detail: {
-                        routing,
-                        currentState: e.currentTarget.hasAttribute('selected')
-                      }
-                    })
-                  )
-                }}"
+              <mwc-icon ?selected="${(this.favorites || []).includes(routing)}"
                 >${this.favorites || [].includes(routing) ? 'star' : 'star_border'}</mwc-icon
               >
             </li>
