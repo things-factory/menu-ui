@@ -116,7 +116,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
 
   async updated(changes) {
     if (changes.has('user')) {
-      this.refreshMenus()
+      this.menus = await this.getMenus()
     }
 
     await this.updateComplete
@@ -132,6 +132,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.menuId = state.route.resourceId
     this.page = state.route.page
     this.user = state.auth.user
+    this.getMenus =
+      state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
   }
 
   _getFullRouting(menu) {
@@ -146,7 +148,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.dispatchEvent(new CustomEvent('refresh'))
   }
 
-  async refreshMenus() {
+  async getMenus() {
     const response = await client.query({
       query: gql`
         query {
@@ -166,7 +168,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       `
     })
 
-    this.menus = response.data.menus
+    return response.data.menus
   }
 }
 

@@ -41,7 +41,13 @@ class MenuListPage extends connect(store)(PageView) {
 
   render() {
     return html`
-      <menu-bar .menus=${this.menus} .menuId=${this.menuId} @refresh=${this.refreshMenus.bind(this)}></menu-bar>
+      <menu-bar
+        .menus=${this.menus}
+        .menuId=${this.menuId}
+        @refresh=${async () => {
+          this.menus = this.getMenus()
+        }}
+      ></menu-bar>
 
       <menu-tile-list
         .menus=${this.menus}
@@ -58,7 +64,7 @@ class MenuListPage extends connect(store)(PageView) {
     }
   }
 
-  async refreshMenus() {
+  async getMenus() {
     const response = await client.query({
       query: gql`
         query {
@@ -78,7 +84,7 @@ class MenuListPage extends connect(store)(PageView) {
       `
     })
 
-    this.menus = response.data.menus
+    return response.data.menus
   }
 
   stateChanged(state) {
@@ -86,11 +92,13 @@ class MenuListPage extends connect(store)(PageView) {
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
     this.favorites = state.favorite.favorites
+    this.getMenus =
+      state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider.bind(this) : this.getMenus
   }
 
   async activated(active) {
     if (active) {
-      this.refreshMenus()
+      this.menus = await this.getMenus()
     }
 
     if (active) {
@@ -106,7 +114,7 @@ class MenuListPage extends connect(store)(PageView) {
         instructionsRefreshing: 'Refreshing',
         instructionsReleaseToRefresh: 'Release to refresh',
         onRefresh: async () => {
-          this.refreshMenus()
+          this.menus = await this.getMenus()
         }
       })
     } else {
