@@ -76,6 +76,7 @@ class MenuListPage extends connect(store)(PageView) {
               name
               routingType
               idField
+              titleField
               resourceName
               template
             }
