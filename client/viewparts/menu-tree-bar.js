@@ -160,6 +160,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
               name
               routingType
               idField
+              titleField
               resourceName
               template
             }
