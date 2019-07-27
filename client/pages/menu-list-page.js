@@ -42,13 +42,7 @@ class MenuListPage extends connect(store)(PageView) {
 
   render() {
     return html`
-      <menu-bar
-        .menus=${this.menus}
-        .menuId=${this.menuId}
-        @refresh=${async () => {
-          this.menus = this.getMenus()
-        }}
-      ></menu-bar>
+      <menu-bar .menus=${this.menus} .menuId=${this.menuId}></menu-bar>
 
       <menu-tile-list
         .menus=${this.menus}
