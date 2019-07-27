@@ -35,7 +35,8 @@ class MenuListPage extends connect(store)(PageView) {
       menuId: String,
       menus: Array,
       routingTypes: Object,
-      favorites: Array
+      favorites: Array,
+      user: Object
     }
   }
 
@@ -64,7 +65,7 @@ class MenuListPage extends connect(store)(PageView) {
     }
   }
 
-  async getMenus() {
+  async fetchMenus() {
     const response = await client.query({
       query: gql`
         query {
@@ -88,13 +89,23 @@ class MenuListPage extends connect(store)(PageView) {
     return response.data.menus
   }
 
+  async updated(changes) {
+    if (changes.has('user')) {
+      if (this.user && this.user.email) {
+        this.menus = await this.getMenus()
+      }
+    }
+  }
+
   stateChanged(state) {
     this._email = state.auth.user ? state.auth.user.email : ''
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
     this.favorites = state.favorite.favorites
-    this.getMenus =
-      state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider.bind(this) : this.getMenus
+    this.user = state.auth.user
+
+    var provider = state.menu.provider
+    this.getMenus = typeof provider === 'function' ? provider.bind(this) : this.fetchMenus
   }
 
   async activated(active) {
