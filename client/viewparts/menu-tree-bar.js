@@ -123,7 +123,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
                 ${menu.childrens.map(subMenu => {
                   const routing = this._getFullRouting(subMenu)
                   const favorite = this.favorites.includes(routing)
-                  const typeIcon = subMenu.routingType.icon ? subMenu.routingType.icon : favorite ? 'star' : null
+                  const { icon } = this.routingTypes[subMenu.routingType] || {}
+                  const typeIcon = icon ? icon : favorite ? 'star' : null
 
                   return html`
                     <li ?active=${routing === decodeURIComponent(location.pathname.substr(1))}>
