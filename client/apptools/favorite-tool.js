@@ -12,7 +12,7 @@ export class FavoriteTool extends connect(store)(LitElement) {
     return {
       favorites: Array,
       user: Object,
-      routing: String,
+      page: String,
       resourceId: String,
       favored: Boolean,
       routingTypes: Object
@@ -46,7 +46,7 @@ export class FavoriteTool extends connect(store)(LitElement) {
   stateChanged(state) {
     this.favorites = state.favorite.favorites
     this.user = state.auth.user
-    this.routing = state.route.page
+    this.page = state.route.page
     this.resourceId = state.route.resourceId
     this.routingTypes = state.menu.routingTypes
   }
@@ -118,9 +118,8 @@ export class FavoriteTool extends connect(store)(LitElement) {
   }
 
   getFullRouting() {
-    var routingType = Object.values(this.routingTypes).includes(this.routing) ? this.routing : ''
-
-    return routingType ? `${routingType}/${this.resourceId}` : this.routing
+    var routingType = Object.values(this.routingTypes).find(type => type.page == this.page)
+    return routingType ? `${this.page}/${this.resourceId}` : this.page
   }
 }
 

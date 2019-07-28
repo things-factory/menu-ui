@@ -12,36 +12,56 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       css`
         :host {
           display: block;
-          min-width: 180px;
+          min-width: 200px;
         }
+
         ul {
           list-style: none;
           margin: 0;
           padding: 0;
         }
+
         li {
           border-bottom: var(--menu-tree-toplevel-border-bottom);
         }
+
         [grouplevel] li {
           border-bottom: var(--menu-tree-grouplevel-border-bottom);
         }
+
         span,
         a {
           display: block;
           text-decoration: none;
+          position: relative;
         }
-        span {
+
+        [menutype] {
+          position: absolute;
+          font-size: 1.2em;
+          right: 0;
+          bottom: 50%;
+          transform: translate(-5px, 50%);
+        }
+
+        [favorite] {
+          color: var(--menu-tree-favorite-color, tomato);
+        }
+
+        [groupmenu] > span {
           padding: 9px 9px 7px 10px;
           font: var(--menu-tree-toplevel-font);
           color: var(--menu-tree-toplevel-color);
         }
+
         a {
           background-color: rgba(0, 0, 0, 0.4);
           padding: 7px 7px 6px 15px;
           font: var(--menu-tree-grouplevel-font);
           color: var(--menu-tree-grouplevel-color);
         }
-        span::before {
+
+        [groupmenu] > span::before {
           content: '';
           display: inline-block;
           width: var(--menu-tree-toplevel-icon-size);
@@ -50,10 +70,12 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           border-radius: 50%;
           margin-right: 5px;
         }
-        a::before {
+
+        a span::before {
           content: '-';
           margin-right: 4px;
         }
+
         [expanded] > span {
           font-weight: bold;
           color: var(--menu-tree-focus-color);
@@ -82,6 +104,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     return {
       menuId: String,
       menus: Array,
+      favorites: Array,
       routingTypes: Object,
       page: Object,
       user: Object
@@ -93,16 +116,25 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       <ul toplevel>
         ${(this.menus || []).map(
           menu => html`
-            <li>
+            <li groupmenu>
               <span @click=${e => e.target.parentElement.toggleAttribute('expanded')}>${menu.name}</span>
 
               <ul grouplevel>
                 ${menu.childrens.map(subMenu => {
                   const routing = this._getFullRouting(subMenu)
+                  const favorite = this.favorites.includes(routing)
+                  const typeIcon = subMenu.routingType.icon ? subMenu.routingType.icon : favorite ? 'star' : null
 
                   return html`
                     <li ?active=${routing === decodeURIComponent(location.pathname.substr(1))}>
-                      <a href=${routing}>${subMenu.name}</a>
+                      <a href=${routing}>
+                        <span>${subMenu.name}</span>
+                        ${typeIcon
+                          ? html`
+                              <mwc-icon menutype ?favorite=${favorite}>${typeIcon}</mwc-icon>
+                            `
+                          : html``}</a
+                      >
                     </li>
                   `
                 })}
@@ -134,14 +166,17 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.user = state.auth.user
     this.getMenus =
       state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
+    this.favorites = state.favorite.favorites
   }
 
   _getFullRouting(menu) {
-    return menu.routingType.toUpperCase() === 'STATIC'
-      ? menu.template
-      : menu.titleField
-      ? `${this.routingTypes[menu.routingType]}/${menu[menu.titleField]}`
-      : `${this.routingTypes[menu.routingType]}/${menu.name}`
+    var { routingType, template, titleField, name } = menu
+    if (routingType.toUpperCase() === 'STATIC') {
+      return template
+    }
+
+    var { page } = this.routingTypes[routingType]
+    return titleField ? `${page}/${menu[titleField]}` : `${page}/${name}`
   }
 
   _onClickRefresh(e) {

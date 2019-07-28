@@ -6,8 +6,8 @@ import PullToRefresh from 'pulltorefreshjs'
 
 import { store, client, PageView, ScrollbarStyles, PullToRefreshStyles } from '@things-factory/shell'
 
-import '../components/menu-bar'
-import '../components/menu-tile-list'
+import '../viewparts/menu-bar'
+import '../viewparts/menu-tile-list'
 
 class MenuListPage extends connect(store)(PageView) {
   static get styles() {
