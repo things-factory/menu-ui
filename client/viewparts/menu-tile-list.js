@@ -48,7 +48,7 @@ export default class MenuTileList extends LitElement {
 
           font-size: 1.5em;
           word-wrap: break-word;
-          word-break: break-all;
+          word-break: keep-all;
 
           margin: 0px;
           display: block;
