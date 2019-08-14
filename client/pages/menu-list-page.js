@@ -73,6 +73,7 @@ class MenuListPage extends connect(store)(PageView) {
               idField
               titleField
               resourceName
+              resourceUrl
               template
             }
           }

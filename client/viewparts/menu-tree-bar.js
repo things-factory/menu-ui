@@ -171,9 +171,9 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   _getFullRouting(menu) {
-    var { routingType, template, titleField, name } = menu
+    var { routingType, resourceUrl, titleField, name } = menu
     if (routingType.toUpperCase() === 'STATIC') {
-      return template
+      return resourceUrl
     }
 
     var { page } = this.routingTypes[routingType]
@@ -198,6 +198,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
               idField
               titleField
               resourceName
+              resourceUrl
               template
             }
           }

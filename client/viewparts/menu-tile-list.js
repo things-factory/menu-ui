@@ -164,9 +164,9 @@ export default class MenuTileList extends LitElement {
   }
 
   _getFullRouting(menu) {
-    var { routingType, template, titleField, name } = menu
+    var { routingType, titleField, name, resourceUrl } = menu
     if (routingType.toUpperCase() === 'STATIC') {
-      return template
+      return resourceUrl
     }
 
     var { page } = this.routingTypes[routingType]
