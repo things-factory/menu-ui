@@ -2,9 +2,7 @@ import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import gql from 'graphql-tag'
 
-import PullToRefresh from 'pulltorefreshjs'
-
-import { store, client, PageView, ScrollbarStyles, PullToRefreshStyles } from '@things-factory/shell'
+import { store, client, PageView, ScrollbarStyles, pulltorefresh } from '@things-factory/shell'
 
 import '../viewparts/menu-bar'
 import '../viewparts/menu-tile-list'
@@ -13,7 +11,6 @@ class MenuListPage extends connect(store)(PageView) {
   static get styles() {
     return [
       ScrollbarStyles,
-      PullToRefreshStyles,
       css`
         :host {
           display: flex;
@@ -103,31 +100,24 @@ class MenuListPage extends connect(store)(PageView) {
     this.getMenus = typeof provider === 'function' ? provider.bind(this) : this.fetchMenus
   }
 
+  async refresh() {
+    this.menus = await this.getMenus()
+  }
+
   async activated(active) {
     if (active) {
-      this.menus = await this.getMenus()
+      this.refresh()
     }
+  }
 
-    if (active) {
-      await this.updateComplete
-      /*
-       * 첫번째 active 시에는 element가 생성되어있지 않으므로,
-       * 꼭 updateComplete를 기다린 후에 mainElement설정을 해야한다.
-       */
-      this._ptr = PullToRefresh.init({
-        mainElement: this.shadowRoot.querySelector('menu-tile-list'),
-        distIgnore: 30,
-        instructionsPullToRefresh: 'Pull down to refresh',
-        instructionsRefreshing: 'Refreshing',
-        instructionsReleaseToRefresh: 'Release to refresh',
-        onRefresh: async () => {
-          this.menus = await this.getMenus()
-        }
-      })
-    } else {
-      this._ptr && this._ptr.destroy()
-      delete this._ptr
-    }
+  firstUpdated() {
+    pulltorefresh({
+      container: this.shadowRoot,
+      scrollable: this.shadowRoot.querySelector('menu-tile-list'),
+      refresh: () => {
+        return this.refresh()
+      }
+    })
   }
 }
 
