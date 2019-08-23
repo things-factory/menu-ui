@@ -17,30 +17,33 @@ export default class MenuBar extends LitElement {
         ul {
           display: flex;
           list-style: none;
-          margin: 5px 5px 0px 5px;
-          padding: 5px 5px 0px 5px;
+          margin: 0;
+          padding: 0;
           white-space: nowrap;
         }
 
         li {
           display: inline-block;
-          padding: 0 7px 5px 7px;
+          padding: 0px 3px;
 
-          border-bottom: solid 3px var(--menu-bar-background-color, #242d30);
+          border-bottom: var(--menu-bar-line);
         }
 
         li[active] {
-          border-color: red;
+          border-color: var(--menu-bar-active-line-color, red);
         }
 
         li a {
+          display: block;
+          padding: 5px 4px 1px 4px;
           text-decoration: none;
+          font: var(--menu-bar-textbutton);
           color: rgba(255, 255, 255, 0.8);
         }
 
         li[active] a {
+          font: var(--menu-bar-textbutton-active);
           color: rgba(255, 255, 255, 1);
-          font-weight: bold;
         }
       `
     ]
