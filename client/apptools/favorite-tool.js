@@ -35,7 +35,7 @@ export class FavoriteTool extends connect(store)(LitElement) {
 
   render() {
     return html`
-      <mwc-icon @click=${this.onclick.bind(this)} ?favorable=${this.favored}
+      <mwc-icon @click=${this.onclick.bind(this)} ?favorable=${!this.favored}
         >${this.favored ? 'star' : 'star_border'}</mwc-icon
       >
     `
