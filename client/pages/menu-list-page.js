@@ -106,8 +106,8 @@ class MenuListPage extends connect(store)(PageView) {
     this.menus = await this.getMenus()
   }
 
-  async activated(active) {
-    if (active) {
+  pageUpdated(changes, lifecycle) {
+    if (this.active) {
       this.refresh()
     }
   }
