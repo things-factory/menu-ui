@@ -112,7 +112,7 @@ class MenuListPage extends connect(store)(PageView) {
     }
   }
 
-  firstUpdated() {
+  async firstUpdated() {
     var uxTargetEl = this.shadowRoot.querySelector('menu-tile-list')
 
     pulltorefresh({
@@ -142,6 +142,10 @@ class MenuListPage extends connect(store)(PageView) {
         navigate(`${this.page}/${currentIndex == 0 ? '' : currentIndex - 1}`)
       }
     })
+
+    await this.updateComplete
+
+    this.menus = await this.getMenus()
   }
 }
 

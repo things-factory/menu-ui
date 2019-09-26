@@ -160,6 +160,12 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     }
   }
 
+  async firstUpdated() {
+    await this.updateComplete
+
+    this.menus = await this.getMenus()
+  }
+
   stateChanged(state) {
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
