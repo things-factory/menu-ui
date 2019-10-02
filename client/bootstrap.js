@@ -25,7 +25,7 @@ export default function bootstrap() {
     type: APPEND_APP_TOOL,
     tool: {
       template: html`
-        <favorite-tool></favorite-tool>
+        <favorite-tool .blackList=${['menu-list']}></favorite-tool>
       `,
       position: TOOL_POSITION.REAR
     }

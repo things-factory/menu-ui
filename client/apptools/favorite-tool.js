@@ -15,7 +15,8 @@ export class FavoriteTool extends connect(store)(LitElement) {
       page: String,
       resourceId: String,
       favored: Boolean,
-      routingTypes: Object
+      routingTypes: Object,
+      blackList: Array
     }
   }
 
@@ -34,11 +35,15 @@ export class FavoriteTool extends connect(store)(LitElement) {
   }
 
   render() {
-    return html`
-      <mwc-icon @click=${this.onclick.bind(this)} ?favorable=${!this.favored}
-        >${this.favored ? 'star' : 'star_border'}</mwc-icon
-      >
-    `
+    var renderable = (this.blackList || []).indexOf(this.page) == -1
+
+    return renderable
+      ? html`
+          <mwc-icon @click=${this.onclick.bind(this)} ?favorable=${!this.favored}
+            >${this.favored ? 'star' : 'star_border'}</mwc-icon
+          >
+        `
+      : html``
   }
 
   updated(changes) {
