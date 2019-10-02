@@ -1,4 +1,5 @@
 import { css, html, LitElement } from 'lit-element'
+import '@things-factory/shell' /* to use oops-note */
 
 import '@material/mwc-icon'
 
@@ -84,6 +85,14 @@ export default class MenuTileList extends LitElement {
           background-color: #7386c3;
         }
 
+        oops-note {
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+
         @media (min-width: 600px) {
           ul {
             grid-template-columns: 1fr 1fr 1fr;
@@ -160,6 +169,24 @@ export default class MenuTileList extends LitElement {
           `
         })}
       </ul>
+
+      ${(submenus.length = 0
+        ? menuId >= 0
+          ? html`
+              <oops-note
+                icon="apps"
+                title="No Menu Found"
+                description="Seems like you are not authorised to view this menu"
+              ></oops-note>
+            `
+          : html`
+              <oops-note
+                icon="star_border"
+                title="No Favourite Found"
+                description="Click ☆ icon to add new favourite menu"
+              ></oops-note>
+            `
+        : html``)}
     `
   }
 
