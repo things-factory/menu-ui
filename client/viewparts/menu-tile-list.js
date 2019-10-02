@@ -170,8 +170,8 @@ export default class MenuTileList extends LitElement {
         })}
       </ul>
 
-      ${(submenus.length = 0
-        ? menuId >= 0
+      ${submenus.length == 0
+        ? typeof menuId == 'number'
           ? html`
               <oops-note
                 icon="apps"
@@ -186,7 +186,7 @@ export default class MenuTileList extends LitElement {
                 description="Click ☆ icon to add new favourite menu"
               ></oops-note>
             `
-        : html``)}
+        : html``}
     `
   }
 
