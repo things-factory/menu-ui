@@ -1,0 +1,25 @@
+body {
+  --menu-bar-background-color: var(--primary-color);
+  --menu-bar-textbutton: 16px/32px var(--theme-font);
+  --menu-bar-textbutton-active: bold var(--menu-bar-textbutton);
+  --menu-bar-active-line-color: var(--focus-color);
+  --menu-bar-line: solid 3px rgba(0, 0, 0, 0.2);
+
+  --menu-tools-background-color: var(--secondary-color);
+  --menu-tools-iconbutton-size: var(--icon-tiny-size);
+  --menu-tools-color: #87cfd0;
+  --menu-tools-active-color: #fff;
+
+  --menu-tree-toplevel-color: #d0fdee;
+  --menu-tree-toplevel-font: normal 15px var(--theme-font);
+  --menu-tree-toplevel-icon-size: 5px;
+  --menu-tree-toplevel-icon-border: 2px solid var(--menu-tree-toplevel-color);
+  --menu-tree-toplevel-border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  --menu-tree-grouplevel-font: normal 13px var(--theme-font);
+  --menu-tree-grouplevel-color: #d0d0d0;
+  --menu-tree-grouplevel-background-color: rgba(0, 0, 0, 0.3);
+  --menu-tree-grouplevel-border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  --menu-tree-grouplevel-active-border-left: 3px solid var(--primary-color);
+  --menu-tree-focus-color: #fff;
+  --menu-tree-favorite-color: var(--menu-tree-toplevel-color);
+}
