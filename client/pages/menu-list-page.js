@@ -113,15 +113,15 @@ class MenuListPage extends connect(store)(PageView) {
   }
 
   async firstUpdated() {
+    var list = this.shadowRoot.querySelector('menu-tile-list')
+
     pulltorefresh({
       container: this.shadowRoot,
-      scrollable: this.shadowRoot,
+      scrollable: list,
       refresh: () => {
         return this.refresh()
       }
     })
-
-    var list = this.shadowRoot.querySelector('menu-tile-list')
 
     swipe({
       container: this.shadowRoot.querySelector('menu-tile-list'),
