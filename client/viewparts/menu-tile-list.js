@@ -1,5 +1,5 @@
 import { css, html, LitElement } from 'lit-element'
-import '@things-factory/shell' /* to use oops-note */
+import '@things-factory/shell' /* to use oops-note, oops-spinner */
 
 import '@material/mwc-icon'
 
@@ -10,6 +10,8 @@ export default class MenuTileList extends LitElement {
         :host {
           display: block;
           box-sizing: border-box;
+
+          position: relative;
         }
 
         ul {
@@ -93,6 +95,18 @@ export default class MenuTileList extends LitElement {
           transform: translate(-50%, -50%);
         }
 
+        oops-spinner {
+          display: none;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        oops-spinner[show] {
+          display: block;
+        }
+
         @media (min-width: 600px) {
           ul {
             grid-template-columns: 1fr 1fr 1fr;
@@ -126,7 +140,8 @@ export default class MenuTileList extends LitElement {
       menuId: String,
       menus: Array,
       routingTypes: Object,
-      favorites: Array
+      favorites: Array,
+      showSpinner: Boolean
     }
   }
 
@@ -160,9 +175,9 @@ export default class MenuTileList extends LitElement {
               class="${subMenu.class} text"
               style="grid-row: span ${subMenu.routingType.toUpperCase() === 'STATIC' ? 1 : 2}"
             >
-              <a href="${routing}">${subMenu.name}</a>
+              <a href=${routing}>${subMenu.name}</a>
 
-              <mwc-icon ?selected="${(this.favorites || []).includes(routing)}"
+              <mwc-icon ?selected=${(this.favorites || []).includes(routing)}
                 >${this.favorites || [].includes(routing) ? 'star' : 'star_border'}</mwc-icon
               >
             </li>
@@ -170,7 +185,7 @@ export default class MenuTileList extends LitElement {
         })}
       </ul>
 
-      ${submenus.length == 0
+      ${submenus.length == 0 && !this.showSpinner
         ? typeof menuId == 'number'
           ? html`
               <oops-note
@@ -187,6 +202,8 @@ export default class MenuTileList extends LitElement {
               ></oops-note>
             `
         : html``}
+
+      <oops-spinner ?show=${this.showSpinner}></oops-spinner>
     `
   }
 
