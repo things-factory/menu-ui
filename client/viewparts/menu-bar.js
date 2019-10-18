@@ -88,6 +88,11 @@ export default class MenuBar extends LitElement {
       /* menus가 바뀔 때마다, contents의 폭이 달라지므로, 다시 폭을 계산해준다. */
       this.__sb && this.__sb.updateMetrics()
     }
+
+    if (change.has('menuId')) {
+      var active = this.shadowRoot.querySelector('li[active]')
+      active && active.scrollIntoView()
+    }
   }
 
   firstUpdated() {
