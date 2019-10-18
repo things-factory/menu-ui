@@ -15,7 +15,6 @@ class MenuListPage extends connect(store)(PageView) {
         :host {
           display: flex;
           flex-direction: column;
-          position: relative;
 
           overflow: hidden;
         }
@@ -123,14 +122,6 @@ class MenuListPage extends connect(store)(PageView) {
     })
 
     var list = this.shadowRoot.querySelector('menu-tile-list')
-    var callback
-
-    list.addEventListener('transitionend', () => {
-      list.style.transition = ''
-
-      callback && callback()
-      callback = null
-    })
 
     swipe({
       container: this.shadowRoot.querySelector('menu-tile-list'),
@@ -149,6 +140,10 @@ class MenuListPage extends connect(store)(PageView) {
         aborting: async opts => {
           list.style.transition = 'transform 0.3s'
           list.style.transform = `translate3d(0, 0, 0)`
+
+          setTimeout(() => {
+            list.style.transition = ''
+          }, 300)
         },
         swiping: async (d, opts) => {
           var currentIndex = Number(this.menuId)
@@ -160,7 +155,10 @@ class MenuListPage extends connect(store)(PageView) {
             return
           }
 
-          callback = () => {
+          list.style.transition = 'transform 0.3s'
+          list.style.transform = `translate3d(${d < 0 ? '-100%' : '100%'}, 0, 0)`
+
+          setTimeout(() => {
             if (isHome) {
               navigate(`${this.page}/0`)
             } else if (d > 0 && currentIndex == 0) {
@@ -176,10 +174,7 @@ class MenuListPage extends connect(store)(PageView) {
               list.style.transition = 'transform 0.3s'
               list.style.transform = `translate3d(0, 0, 0)`
             })
-          }
-
-          list.style.transition = 'transform 0.3s'
-          list.style.transform = `translate3d(${d < 0 ? '-100%' : '100%'}, 0, 0)`
+          }, 300)
         }
       }
     })
