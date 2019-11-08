@@ -107,7 +107,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       favorites: Array,
       routingTypes: Object,
       page: Object,
-      user: Object
+      user: Object,
+      contextPath: String
     }
   }
 
@@ -148,7 +149,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   async updated(changes) {
-    if (changes.has('user')) {
+    if (changes.has('user') || changes.has('contextPath')) {
       this.menus = await this.getMenus()
     }
 
@@ -167,6 +168,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    this.contextPath = state.app.contextPath
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
     this.page = state.route.page
