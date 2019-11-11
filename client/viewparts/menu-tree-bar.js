@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 import '@material/mwc-icon'
 
-import { store, client } from '@things-factory/shell'
+import { store, client, navigate } from '@things-factory/shell'
 
 export default class MenuTreeBar extends connect(store)(LitElement) {
   static get styles() {
@@ -13,6 +13,27 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
         :host {
           display: block;
           min-width: 200px;
+        }
+
+        select,
+        [domain] span {
+          width: -webkit-fill-available;
+          margin: 5px;
+
+          font-size: 1.2em;
+          font-weight: bold;
+          text-align: center;
+          text-align-last: center; /* for select */
+
+          color: darkslategrey;
+          background-color: transparent;
+
+          border: 0px;
+          border-radius: 0px;
+        }
+
+        select:focus {
+          outline: 0;
         }
 
         ul {
@@ -108,12 +129,30 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       routingTypes: Object,
       page: Object,
       user: Object,
-      contextPath: String
+      contextPath: String,
+      domains: Array,
+      domain: Object
     }
   }
 
   render() {
     return html`
+      <div domain>
+        ${this.domains.length <= 1
+          ? html`
+              <span>${this.domain.name}</span>
+            `
+          : html`
+              <select .value=${this.domain.name} @change=${e => navigate('/domain/' + e.target.value)}>
+                ${this.domains.map(
+                  domain => html`
+                    <option .value=${domain.subdomain}>${domain.name}</option>
+                  `
+                )}
+              </select>
+            `}
+      </div>
+
       <ul toplevel>
         ${(this.menus || []).map(
           menu => html`
@@ -173,6 +212,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.menuId = state.route.resourceId
     this.page = state.route.page
     this.user = state.auth.user
+    this.domains = state.auth.domains
+    this.domain = this.user ? this.user.domain : null
     this.getMenus =
       state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
     this.favorites = state.favorite.favorites
