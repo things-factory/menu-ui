@@ -136,15 +136,18 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   render() {
+    var domains = this.domains || []
+    var domain = this.domain || {}
+
     return html`
       <div domain>
-        ${this.domains.length <= 1
+        ${domains.length <= 1
           ? html`
-              <span>${this.domain.name}</span>
+              <span>${domain.name}</span>
             `
           : html`
-              <select .value=${this.domain.name} @change=${e => navigate('/domain/' + e.target.value)}>
-                ${this.domains.map(
+              <select .value=${domain.name} @change=${e => navigate('/domain/' + e.target.value)}>
+                ${domains.map(
                   domain => html`
                     <option .value=${domain.subdomain}>${domain.name}</option>
                   `
