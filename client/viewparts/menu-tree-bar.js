@@ -215,7 +215,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.menuId = state.route.resourceId
     this.page = state.route.page
     this.user = state.auth.user
-    this.domains = state.auth.domains
+    this.domains = state.app.domains
     this.domain = this.user ? this.user.domain : null
     this.getMenus =
       state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
