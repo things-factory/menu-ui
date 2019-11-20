@@ -22,4 +22,11 @@ body {
   --menu-tree-grouplevel-active-border-left: 3px solid var(--primary-color);
   --menu-tree-focus-color: #fff;
   --menu-tree-favorite-color: var(--menu-tree-toplevel-color);
+
+  --menu-domain-background-color: var(--secondary-color);
+  --menu-domain-bottom-radius: 12px;
+  --menu-domain-font: bold 14px var(--theme-font);
+  --menu-domain-color: #fff;
+  --menu-domain-icon-color: #56c9ff;
+  --menu-domain-padding: 0px 7px 4px 8px;
 }
