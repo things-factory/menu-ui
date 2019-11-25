@@ -7,6 +7,10 @@ export default {
     {
       tagname: 'menu-list-page',
       page: 'menu-list'
+    },
+    {
+      tagname: 'menu-management',
+      page: 'menus'
     }
   ],
   bootstrap
