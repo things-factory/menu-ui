@@ -86,8 +86,8 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
     return this.shadowRoot.querySelector('data-grist')
   }
 
-  async firstUpdated() {
-    this._searchFields = [
+  firstUpdated() {
+    this.searchFields = [
       {
         name: 'name',
         label: i18next.t('field.name'),
@@ -120,7 +120,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
       },
       {
         name: 'hiddenFlag',
-        label: i18next.t('field.resource_url'),
+        label: i18next.t('field.hidden_flag'),
         type: 'checkbox',
         props: { searchOper: 'eq' },
         attrs: ['indeterminate']
@@ -311,8 +311,8 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
           patchField[key] = dirtyFields[key].after
         }
         patchField.parent = { id: this.menuId }
-        patchField.routingType = patchField.routingType | 'STATIC'
-        patchField.menuType = patchField.menuType | 'SCREEN'
+        patchField.routingType = patchField.routingType || 'STATIC'
+        patchField.menuType = patchField.menuType || 'SCREEN'
         patchField.cuFlag = menu.__dirty__
 
         return patchField
