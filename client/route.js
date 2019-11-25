@@ -4,7 +4,7 @@ export default function route(page) {
       import('./pages/menu-list-page')
       return page
 
-    case 'menu-management':
+    case 'menus':
       import('./pages/menu-management')
       return page
   }
