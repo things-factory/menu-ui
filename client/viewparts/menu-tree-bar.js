@@ -141,13 +141,13 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       user: Object,
       contextPath: String,
       domains: Array,
-      domain: Object
+      subdomain: String
     }
   }
 
   render() {
     var domains = this.domains || []
-    var domain = this.domain || {}
+    var domain = this.domains.find(domain => domain.subdomain == this.subdomain) || {}
 
     return html`
       <div domain>
@@ -157,10 +157,12 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
               <span>${domain.name}</span>
             `
           : html`
-              <select .value=${domain.name} @change=${e => navigate('/domain/' + e.target.value)}>
+              <select .value=${domain.subdomain} @change=${e => navigate('/domain/' + e.target.value)}>
                 ${domains.map(
                   domain => html`
-                    <option .value=${domain.subdomain}>${domain.name}</option>
+                    <option .value=${domain.subdomain} ?selected=${domain.subdomain == this.subdomain}
+                      >${domain.name}</option
+                    >
                   `
                 )}
               </select>
@@ -226,8 +228,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
     this.menuId = state.route.resourceId
     this.page = state.route.page
     this.user = state.auth.user
-    this.domains = state.auth.domains
-    this.domain = this.user ? this.user.domain : null
+    this.domains = state.app.domains
+    this.subdomain = this.contextPath.split('/')[2]
     this.getMenus =
       state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
     this.favorites = state.favorite.favorites
