@@ -1,0 +1,23 @@
+{
+  "button.cancel": "취소",
+  "button.delete": "삭제",
+  "button.save": "저장",
+  "field.category": "카테고리",
+  "field.description": "설명",
+  "field.hidden_flag": "숨김",
+  "field.name": "이름",
+  "field.rank": "순위",
+  "field.resource_url": "리소스 url",
+  "field.template": "템플릿",
+  "field.updated_at": "수정일시",
+  "field.updater": "수정자",
+  "label.description": "설명",
+  "label.name": "이름",
+  "text.are_you_sure": "진행하시겠습니까?",
+  "text.nothing_changed": "변경사항 없음",
+  "text.nothing_selected": "선택되지 않음",
+  "text.there_is_nothing_to_delete": "삭제할 데이터가 없습니다.",
+  "text.there_is_nothing_to_save": "저장할 데이터가 없습니다.",
+  "title.menu_management": "메뉴 관리",
+  "title.menu_management_detail": "메뉴 관리 상세"
+}
