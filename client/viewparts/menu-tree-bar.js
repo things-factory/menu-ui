@@ -157,7 +157,10 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
               <span>${domain.name}</span>
             `
           : html`
-              <select .value=${domain.subdomain} @change=${e => navigate('/domain/' + e.target.value)}>
+              <select
+                .value=${domain.subdomain}
+                @change=${e => (window.location.pathname = `/checkin/${e.target.value}`)}
+              >
                 ${domains.map(
                   domain => html`
                     <option .value=${domain.subdomain} ?selected=${domain.subdomain == this.subdomain}
