@@ -168,7 +168,7 @@ class MenuListPage extends connect(store)(PageView) {
             }
 
             list.style.transition = ''
-            list.style.transform = `translate3d(0, -100%, 0)`
+            list.style.transform = `translate3d(${d < 0 ? '100%' : '-100%'}, 0, 0)`
 
             requestAnimationFrame(() => {
               list.style.transition = 'transform 0.3s'
