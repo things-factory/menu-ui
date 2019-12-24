@@ -8,6 +8,7 @@
   "field.name": "name",
   "field.rank": "rank",
   "field.resource_url": "resource url",
+  "field.role": "role",
   "field.template": "template",
   "field.updated_at": "updated at",
   "field.updater": "updater",

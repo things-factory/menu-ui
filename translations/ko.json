@@ -8,6 +8,7 @@
   "field.name": "이름",
   "field.rank": "순위",
   "field.resource_url": "리소스 url",
+  "field.role": "역할",
   "field.template": "템플릿",
   "field.updated_at": "수정일시",
   "field.updater": "수정자",

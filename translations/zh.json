@@ -8,6 +8,7 @@
   "field.name": "名字",
   "field.rank": "列为",
   "field.resource_url": "资源url",
+  "field.role": "role",
   "field.template": "模板",
   "field.updated_at": "更新于",
   "field.updater": "更新者",

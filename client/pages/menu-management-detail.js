@@ -159,12 +159,18 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
           width: 200
         },
         {
-          type: 'string',
-          name: 'category',
-          header: i18next.t('field.category'),
-          record: { editable: true, align: 'center' },
+          type: 'object',
+          name: 'role',
+          header: i18next.t('field.role'),
+          record: {
+            editable: true,
+            align: 'center',
+            options: {
+              queryName: 'roles'
+            }
+          },
           sortable: true,
-          width: 200
+          width: 250
         },
         {
           type: 'string',
@@ -311,6 +317,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
           patchField[key] = dirtyFields[key].after
         }
         patchField.parent = { id: this.menuId }
+        patchField.role = { id: patchField.role.id }
         patchField.routingType = patchField.routingType || 'STATIC'
         patchField.menuType = patchField.menuType || 'SCREEN'
         patchField.cuFlag = menu.__dirty__

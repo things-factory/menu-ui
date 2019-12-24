@@ -8,6 +8,7 @@
   "field.name": "nama",
   "field.rank": "rank",
   "field.resource_url": "sumber url",
+  "field.role": "role",
   "field.template": "templat",
   "field.updated_at": "updated at",
   "field.updater": "updater",
