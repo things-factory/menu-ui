@@ -230,6 +230,10 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
               name
               rank
               description
+              role {
+                name
+                description
+              }
               category
               template
               resourceUrl
