@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 
 import '@material/mwc-icon'
 
-import { store, client } from '@things-factory/shell'
+import { store, client, navigate } from '@things-factory/shell'
 
 export default class MenuTreeBar extends connect(store)(LitElement) {
   static get styles() {
@@ -13,6 +13,37 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
         :host {
           display: block;
           min-width: 200px;
+        }
+        [domain] {
+          background-color: var(--menu-domain-background-color);
+          border-bottom-left-radius: var(--menu-domain-bottom-radius);
+          border-bottom-right-radius: var(--menu-domain-bottom-radius);
+          padding: var(--menu-domain-padding);
+
+          box-shadow: var(--box-shadow);
+        }
+        [domain] mwc-icon {
+          font-size: 14px;
+          color: var(--menu-domain-icon-color);
+        }
+        [domain] * {
+          vertical-align: middle;
+        }
+        [domain] span {
+          font: var(--menu-domain-font);
+          color: var(--menu-domain-color);
+        }
+        [domain] select {
+          width: -webkit-fill-available;
+          max-width: 162px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+
+          font: var(--menu-domain-font);
+          color: var(--menu-domain-color);
+          background-color: var(--menu-domain-background-color);
+        }
+        select:focus {
+          outline: 0;
         }
 
         ul {
@@ -29,8 +60,8 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           border-bottom: var(--menu-tree-grouplevel-border-bottom);
         }
 
-        span,
-        a {
+        li span,
+        li a {
           display: block;
           text-decoration: none;
           position: relative;
@@ -107,12 +138,40 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
       favorites: Array,
       routingTypes: Object,
       page: Object,
-      user: Object
+      user: Object,
+      contextPath: String,
+      domains: Array,
+      subdomain: String
     }
   }
 
   render() {
+    var domains = this.domains || []
+    var domain = this.domains.find(domain => domain.subdomain == this.subdomain) || {}
+
     return html`
+      <div domain>
+        <mwc-icon>beenhere</mwc-icon>
+        ${domains.length <= 1
+          ? html`
+              <span>${domain.name}</span>
+            `
+          : html`
+              <select
+                .value=${domain.subdomain}
+                @change=${e => (window.location.pathname = `/checkin/${e.target.value}`)}
+              >
+                ${domains.map(
+                  domain => html`
+                    <option .value=${domain.subdomain} ?selected=${domain.subdomain == this.subdomain}
+                      >${domain.name}</option
+                    >
+                  `
+                )}
+              </select>
+            `}
+      </div>
+
       <ul toplevel>
         ${(this.menus || []).map(
           menu => html`
@@ -148,7 +207,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   async updated(changes) {
-    if (changes.has('user')) {
+    if (changes.has('user') || changes.has('contextPath')) {
       this.menus = await this.getMenus()
     }
 
@@ -167,10 +226,13 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    this.contextPath = state.app.contextPath
     this.routingTypes = state.menu.routingTypes
     this.menuId = state.route.resourceId
     this.page = state.route.page
     this.user = state.auth.user
+    this.domains = state.app.domains
+    this.subdomain = this.contextPath.split('/')[2]
     this.getMenus =
       state.menu.provider && typeof state.menu.provider === 'function' ? state.menu.provider : this.getMenus
     this.favorites = state.favorite.favorites
