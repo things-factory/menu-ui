@@ -1,6 +1,6 @@
 {
   "name": "@things-factory/menu-ui",
-  "version": "1.0.0-alpha.16",
+  "version": "2.0.0",
   "main": "dist-server/index.js",
   "browser": "client/index.js",
   "things-factory": true,
@@ -23,18 +23,18 @@
     "migration:revert": "node ./node_modules/typeorm/cli.js migration:revert"
   },
   "dependencies": {
-    "@things-factory/apptool-base": "^1.0.0-alpha.1",
-    "@things-factory/fav-base": "^1.0.0-alpha.1",
-    "@things-factory/form-ui": "^1.0.0-alpha.1",
-    "@things-factory/grist-ui": "^1.0.0-alpha.1",
-    "@things-factory/i18n-ui": "^1.0.0-alpha.1",
-    "@things-factory/layout-base": "^1.0.0-alpha.1",
-    "@things-factory/menu-base": "^1.0.0-alpha.1",
-    "@things-factory/shell": "^1.0.0-alpha.1"
+    "@things-factory/apptool-base": "^2.0.0",
+    "@things-factory/fav-base": "^2.0.0",
+    "@things-factory/form-ui": "^2.0.0",
+    "@things-factory/grist-ui": "^2.0.0",
+    "@things-factory/i18n-ui": "^2.0.0",
+    "@things-factory/layout-base": "^2.0.0",
+    "@things-factory/menu-base": "^2.0.0",
+    "@things-factory/shell": "^2.0.0"
   },
   "devDependencies": {
-    "@things-factory/board-test": "^1.0.0-alpha.1",
-    "@things-factory/opa-app": "^1.0.0-alpha.1",
-    "@things-factory/opa-test": "^1.0.0-alpha.1"
+    "@things-factory/board-test": "^2.0.0",
+    "@things-factory/opa-app": "^2.0.0",
+    "@things-factory/opa-test": "^2.0.0"
   }
 }
