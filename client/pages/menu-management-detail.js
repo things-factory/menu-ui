@@ -164,7 +164,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
           header: i18next.t('field.role'),
           record: {
             editable: true,
-            align: 'center',
+            align: 'left',
             options: {
               queryName: 'roles'
             }
@@ -231,6 +231,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
               rank
               description
               role {
+                id
                 name
                 description
               }
@@ -284,7 +285,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
   async delete() {
     const ids = this.dataGrist.selected.map(record => record.id)
     if (ids && ids.length > 0) {
-      const anwer = await CustomAlert({
+      const answer = await CustomAlert({
         type: 'warning',
         title: i18next.t('button.delete'),
         text: i18next.t('text.are_you_sure'),
@@ -292,7 +293,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
         cancelButton: { text: i18next.t('button.cancel') }
       })
 
-      if (!anwer.value) return
+      if (!answer.value) return
 
       const response = await client.query({
         query: gql`
@@ -316,6 +317,7 @@ class MenuManagementDetail extends localize(i18next)(LitElement) {
     if (patches && patches.length) {
       patches = patches.map(menu => {
         let patchField = menu.id ? { id: menu.id } : {}
+        patchField = { ...patchField, role: menu.role, routingType: menu.routingType, menuType: menu.menuType }
         const dirtyFields = menu.__dirtyfields__
         for (let key in dirtyFields) {
           patchField[key] = dirtyFields[key].after
