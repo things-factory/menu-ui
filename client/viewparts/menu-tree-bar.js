@@ -15,15 +15,14 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           min-width: 200px;
         }
         [domain] {
-          background-color: var(--menu-domain-background-color);
-          border-bottom-left-radius: var(--menu-domain-bottom-radius);
-          border-bottom-right-radius: var(--menu-domain-bottom-radius);
+          background: var(--menu-domain-background-color);
+          background: linear-gradient(180deg, var(--secondary-color) 0%, rgba(var(--primary-color-rgb), 0.5) 120%);
           padding: var(--menu-domain-padding);
-
-          box-shadow: var(--box-shadow);
+          border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.5);
         }
         [domain] mwc-icon {
-          font-size: 14px;
+          margin-right: -8px;
+          font-size: 12px;
           color: var(--menu-domain-icon-color);
         }
         [domain] * {
@@ -34,13 +33,13 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           color: var(--menu-domain-color);
         }
         [domain] select {
+          background-color: transparent;
           width: -webkit-fill-available;
-          max-width: 162px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          max-width: 175px;
+          border: none;
 
           font: var(--menu-domain-font);
           color: var(--menu-domain-color);
-          background-color: var(--menu-domain-background-color);
         }
         select:focus {
           outline: 0;
