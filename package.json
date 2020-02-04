@@ -29,8 +29,7 @@
     "@things-factory/grist-ui": "^2.0.0",
     "@things-factory/i18n-ui": "^2.0.0",
     "@things-factory/layout-base": "^2.0.0",
-    "@things-factory/menu-base": "^2.0.0",
-    "@things-factory/shell": "^2.0.0"
+    "@things-factory/menu-base": "^2.0.0"
   },
   "devDependencies": {
     "@things-factory/board-test": "^2.0.0",
