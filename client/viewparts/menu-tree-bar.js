@@ -29,6 +29,7 @@ export default class MenuTreeBar extends connect(store)(LitElement) {
           vertical-align: middle;
         }
         [domain] span {
+          padding-left: 7px;
           font: var(--menu-domain-font);
           color: var(--menu-domain-color);
         }
