@@ -2,7 +2,9 @@ import { css, html } from 'lit-element'
 import { connect } from 'pwa-helpers/connect-mixin.js'
 import gql from 'graphql-tag'
 
-import { store, client, PageView, ScrollbarStyles, pulltorefresh, navigate, swipe } from '@things-factory/shell'
+import { store, client, PageView, navigate } from '@things-factory/shell'
+import { pulltorefresh, swipe } from '@things-factory/utils'
+import { ScrollbarStyles } from '@things-factory/styles'
 
 import '../viewparts/menu-bar'
 import '../viewparts/menu-tile-list'

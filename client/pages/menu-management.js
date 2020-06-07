@@ -275,16 +275,11 @@ class MenuManagement extends localize(i18next)(PageView) {
   }
 
   openMenuDetail(menuId, menuName) {
-    openPopup(
-      html`
-        <menu-management-detail .menuId=${menuId}></menu-management-detail>
-      `,
-      {
-        backdrop: true,
-        size: 'large',
-        title: `${i18next.t('title.menu_management_detail')} - ${menuName}`
-      }
-    )
+    openPopup(html` <menu-management-detail .menuId=${menuId}></menu-management-detail> `, {
+      backdrop: true,
+      size: 'large',
+      title: `${i18next.t('title.menu_management_detail')} - ${menuName}`
+    })
   }
 }
 
